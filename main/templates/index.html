@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    
+    <title>Document</title>
+  </head>
+  <body>
+    
+    <a href="{% url 'groups' %}"><button type="button" class="btn btn-outline-danger" style="position: absolute; z-index: 1000;">Расписание</button></a>
+    <div class="tema_container">
+      <div class="tema_block">
+        <div class="menu_block">
+        {% for faculty in faculties %}
+          <div class="menu_item">
+            <h1 onclick="myFunction('{{faculty.name}}')"><i class="fas fa-university"> {{ faculty }}</i></h1>
+            <div class="menu" id={{faculty.name}} style="display: none">
+              {% for cource in cources %}
+                {% if cource.faculty == faculty %}
+                  <h3 onclick="menu('{{cource}}')" style="margin-left: 83px;"><i class="fas fa-layer-group"> {{cource.name}}</i> </h3>
+                  <div class="sub_menu" id='{{cource}}' style="display: none; margin-left: 125px">
+                    {% for group in groups %}
+                      {% if group.cource == cource and group.cource.faculty == faculty %}
+                        <h3><a href="{% url 'att' %}?group={{group.id}}"><i class="fas fa-users"> {{ group.name }}</i></a></h3>
+                      {% endif %}
+                    {% endfor %}
+                  </div>  
+                {% endif %}
+              {% endfor %}
+
+            </div>
+          </div>
+          
+
+        {% endfor %}
+
+
+        </div>
+        <div></div>
+        <div class="content_block">
+          
+
+
+
+          <div class="center">
+        
+            <div class="main">
+              <table class="table" style="border: 0px solid gray;">
+                  <thead>
+                      <tr>
+
+                          <th scope="col">ФИО</th>
+                          {% for day in calendar %}
+                              <th scope="col" style="writing-mode: vertical-lr;">{{day}}</th>
+                              
+                          {% endfor %}
+                      </tr>
+                  </thead>
+                  
+                  <tbody>
+                      {% for student in data %}
+                      <tr>
+
+                          <td style="min-width:  300px;">{{student.name}}</td>
+                          {% for day in calendar %}
+                              {% if day in student.att %}
+                                  {% for i,j in student.att.items %}
+                                      {% if day == i %}
+                                          <td>
+                                              {{j}}
+                                          </td>
+                                      {% endif %}
+                                  {% endfor %}
+                                  
+                              {% else %}                                        
+                                  <td>--</td>
+                              {% endif %}
+                          {% endfor %}
+                      </tr>
+                      {% endfor %}
+
+                  </tbody>
+              </table>
+            </div>
+
+
+          </div>
+        </div>
+
+
+
+
+
+
+        </div>
+
+      </div>
+    </div>
+
+
+    <script>
+      function myFunction(id1) {
+        var tmp = id1
+        var x = document.getElementById(tmp);
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+
+      function menu(id2) {
+        var x = document.getElementById(id2);
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+    </script>
+
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .tema_container {
+        background-color: grey;
+        min-height: 100vh;
+      }
+      .tema_block {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        gap: 10px;
+      }
+      .menu_block {
+        border-right: 2px solid #4d6ecf;
+        background-color: #202020;
+        width: 20%;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 40px;
+        position: fixed;
+        top: 0;
+      }
+      .content_block {
+        background-color: grey;
+        width: 78%;
+        overflow-x: scroll;
+        text-align: center;
+
+        margin-top: 23px;
+
+      }
+      .content_block h1{
+       width: 102%;
+      }
+      .menu_item {
+        margin-top: 10px;
+        margin-right: 50px;
+      }
+
+      .menu_item:hover{
+        margin-top: 10px;
+        margin-right: 50px;
+        transform: scale(1.04, 1.04);
+      }
+      .menu_item h1,
+      h3,
+      p {
+        color: red;
+        margin-top: 5px;
+        cursor: pointer;
+      }
+      ::-webkit-scrollbar {
+        width: 20px;
+        height: 4px;
+        background: #4d6ecf;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #4d6ecf;
+        border-radius: 10px;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #4d6ecf;
+      }
+      h3:hover {
+        transform: scale(1.04, 1.04);
+      }
+    </style>
+  </body>
+</html>

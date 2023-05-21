@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <table>
+            <thead>
+                <tr>
+                
+                <th scope="col" class="action-checkbox-column">
+                
+                <div class="text"><span><input type="checkbox" id="action-toggle"></span></div>
+                <div class="clear"></div>
+                </th>
+                <th scope="col" class="sortable column-students">
+                
+                <div class="text"><a href="?o=1">Students</a></div>
+                <div class="clear"></div>
+                </th>
+                <th scope="col" class="sortable column-today">
+                
+                <div class="text"><a href="?o=2">Today</a></div>
+                <div class="clear"></div>
+                </th>
+                <th scope="col" class="sortable column-was">
+                
+                <div class="text"><a href="?o=3">I</a></div>
+                <div class="clear"></div>
+                </th>
+                <th scope="col" class="sortable column-was2">
+                
+                <div class="text"><a href="?o=4">II</a></div>
+                <div class="clear"></div>
+                </th>
+                <th scope="col" class="sortable column-was3">
+                
+                <div class="text"><a href="?o=5">III</a></div>
+                <div class="clear"></div>
+                </th>
+                <th scope="col" class="sortable column-was4">
+                
+                <div class="text"><a href="?o=6">IV</a></div>
+                <div class="clear"></div>
+                </th>
+                <th scope="col" class="sortable column-was5">
+                
+                <div class="text"><a href="?o=7">V</a></div>
+                <div class="clear"></div>
+                </th>
+                <th scope="col" class="sortable column-gr">
+                
+                <div class="text"><a href="?o=8">Gr</a></div>
+                <div class="clear"></div>
+                </th>
+                </tr>
+            </thead>
+            <tbody>
+            
+                {% for a in att %}
+                <tr>
+                    <td class="action-checkbox">
+                        <input type="checkbox" name="_selected_action" value="24" class="action-select">
+                    
+                    <td class="field-today nowrap">{{a.students.name}} </td>
+                    <td class="field-today nowrap">{{a.today}}</td>
+                    <td class="field-was"><input type="checkbox" name="form-0-was" id="id_form-0-was"></td>
+                    <td class="field-was2"><input type="checkbox" name="form-0-was2" id="id_form-0-was2"></td>
+                    <td class="field-was3"><input type="checkbox" name="form-0-was3" id="id_form-0-was3" checked=""></td>
+                    <td class="field-was4"><input type="checkbox" name="form-0-was4" id="id_form-0-was4" checked=""></td>
+                    <td class="field-was5"><input type="checkbox" name="form-0-was5" id="id_form-0-was5" checked=""></td>
+                    <td class="field-gr nowrap">PIB</td>
+                </tr>
+                {% endfor %}
+            
+            </tbody>
+        </table>
+        <button type="submit"></button>
+    </form>
+</body>
+</html>
